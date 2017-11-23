@@ -54,7 +54,7 @@ public class ClientLoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public ClientLoginFrame() {
-		setTitle("客户端登陆界面");
+		setTitle("LW+Client");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -68,7 +68,7 @@ public class ClientLoginFrame extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField("梅超风");
+		textField_1 = new JTextField("Leecole");
 		textField_1.setBounds(107, 70, 192, 21);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
@@ -119,7 +119,7 @@ public class ClientLoginFrame extends JFrame {
 						e1.printStackTrace();
 					}
 					String[]  users=allUsers.substring(1, allUsers.length()-1).split(",");
-					 System.out.println(allUsers);//[    梅超风,AAA,CCC     ]
+					 System.out.println(allUsers);//[    Leecole,AAA,CCC     ]
 					 ChatFrame  chat=new ChatFrame(users);
 					 chat.setVisible(true);
 					 ClientLoginFrame.this.setVisible(false);

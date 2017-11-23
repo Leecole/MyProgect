@@ -23,6 +23,7 @@ public class ChatFrame extends JFrame {
 			public void run() {
 				try {
 					ChatFrame frame = new ChatFrame(new String[] {"adsa"});
+					frame.setTitle("聊天界面");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

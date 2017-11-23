@@ -48,7 +48,7 @@ public class ServerFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public ServerFrame() {
-		setTitle("聊天室服务器端");
+		setTitle("LW+Server");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 696, 519);

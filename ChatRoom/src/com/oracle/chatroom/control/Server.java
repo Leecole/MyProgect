@@ -40,9 +40,9 @@ public class Server {
 				Socket client=s.accept();//阻塞方法
 				BufferedReader  r=new BufferedReader(new InputStreamReader(client.getInputStream()));
 				String username=r.readLine();//
+				System.out.println("有新的客户端连接进来了~——~");
 				//如果上面三行代码能运行过来，说明当前肯定有一个客户端链接到服务器了
 				//而且这个客户端把他的昵称也发送过来了，（相当于我们这个系统中登陆行为）
-				//既然该用户登陆了，那么我们就应该将他的信息存储到服务器端的集合里
 				allUsers.put(client.getInetAddress().toString(), username);
 				BufferedWriter  out=new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 				out.write(allUsers.values().toString()+"\r\n");
