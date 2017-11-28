@@ -77,6 +77,7 @@ package com.demo.view;
 			setBackground(new Color(255, 228, 196));
 			setForeground(new Color(255, 228, 196));
 			setTitle("µÇÂ½½çÃæ");
+			setLocationRelativeTo(null);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 411);
 			contentPane = new JPanel();
