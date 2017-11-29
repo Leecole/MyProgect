@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Contral.User;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -118,7 +117,7 @@ public class ChatFrame extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setToolTipText("\u8868\u60C5\u5305\u96C6\u5408");
-		tabbedPane.addTab("±íÇé°ü", null, panel_1, null);
+		tabbedPane.addTab("ï¿½ï¿½ï¿½ï¿½ï¿½", null, panel_1, null);
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();

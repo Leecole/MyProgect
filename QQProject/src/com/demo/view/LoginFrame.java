@@ -76,7 +76,7 @@ package com.demo.view;
 			setModalExclusionType(ModalExclusionType.TOOLKIT_EXCLUDE);
 			setBackground(new Color(255, 228, 196));
 			setForeground(new Color(255, 228, 196));
-			setTitle("µÇÂ½½çÃæ");
+			setTitle("LoginFrmae");
 			setLocationRelativeTo(null);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 411);
@@ -102,24 +102,24 @@ package com.demo.view;
 			
 			username = new JTextField("Please input your username");
 			username.setBackground(new Color(255, 228, 225));
-			username.addKeyListener(new KeyListener(){//¿ØÖÆÌ¨Êä³öÕıÔÚÊäÈëµÄÊÂ¼ş
+			username.addKeyListener(new KeyListener(){//ï¿½ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 				@Override
 				public void keyPressed(KeyEvent e) {}
 				@Override
 				public void keyReleased(KeyEvent e) {}
 				@Override
 				public void keyTyped(KeyEvent e) {
-					System.out.println("ÄúÊäÈëµÄÓÃ»§Ãû\n"+username.getText());
+					System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½\n"+username.getText());
 				}
 			});
-			username.addFocusListener(new FocusListener() {//µ±Êó±ê¾Û½¹Ê±£¬ Èç¹ûÎÄ±¾¿òÖĞÏÔÊ¾µÄÊÇPlease input your usernameÊ±£¬ÔòÎÄ±¾¿òÇå¿Õ£¬µÈ´ıÓÃ»§ÊäÈëÕËºÅ
+			username.addFocusListener(new FocusListener() {//ï¿½ï¿½ï¿½ï¿½ï¿½Û½ï¿½Ê±ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Please input your usernameÊ±ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½Õ£ï¿½ï¿½È´ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½
 				@Override
 				public void focusGained(FocusEvent e) {
 					if(username.getText().equals("Please input your username"))
 						username.setText("");
 				}
 				@Override
-				public void focusLost(FocusEvent e) {//µ±Êó±êÒÆ×ßµÄÊ±ºò£¬Èç¹ûÓÃ»§ÃûÎª¿Õ£¬ÔòÏÔÊ¾Please input your usernameÕâ¸öÎÄ±¾ÌáÊ¾¿ò
+				public void focusLost(FocusEvent e) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Please input your usernameï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½
 					if(username.getText().length()==0)
 						username.setText("Please input your username");
 				}
@@ -136,31 +136,31 @@ package com.demo.view;
 
 				@Override
 				public void focusGained(FocusEvent e) {
-					if(password.getText().equals("ÇëÊäÈëÃÜÂë"))
+					if(password.getText().equals("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"))
 						password.setText("");
 				}
 				@Override
 				public void focusLost(FocusEvent e) {
 					if(password.getText().length()==0)
-						password.setText("ÇëÊäÈëÃÜÂë");
+						password.setText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				}
 			} );
-			password.setText("ÇëÊäÈëÃÜÂë");
+			password.setText("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			password.setBounds(177, 235, 169, 24);
 			panel.add(password);
 			
-			JLabel username = new JLabel("ÕËºÅ");//ÕËºÅÊäÈë¿ò
+			JLabel username = new JLabel("Username");//ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			username.setBackground(new Color(0, 204, 51));
 			username.setEnabled(false);
 			username.setBounds(360, 201, 72, 18);
 			panel.add(username);
 			
-			JLabel password = new JLabel("ÃÜÂë");
+			JLabel password = new JLabel("Password");
 			password.setEnabled(false);
 			password.setBounds(360, 238, 72, 18);
 			panel.add(password);
 			
-			JButton login = new JButton("µÇÂ¼");
+			JButton login = new JButton("Login");
 			login.setForeground(new Color(255, 105, 180));
 			login.addFocusListener(new FocusListener() {
 				@Override
@@ -168,7 +168,7 @@ package com.demo.view;
 					login.setForeground(getForeground().blue);
 					boolean result=username.getText()!=null&&password.getText()!=null;
 					if(result) {
-						JOptionPane.showMessageDialog(LoginFrame.this ,result?"µÇÂ¼³É¹¦":"µÇÂ¼Ê§°Ü" );//µ¯³öÒ»¸öÏûÏ¢ÌáÊ¾¿ò£¬
+						JOptionPane.showMessageDialog(LoginFrame.this ,result?" Login Successfully ":"Login Failure" );//ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¾ï¿½ï¿½
 					}
 				
 				}
@@ -180,21 +180,20 @@ package com.demo.view;
 			login.setBounds(178, 294, 113, 27);
 			panel.add(login);
 			
-			JButton signup = new JButton("×¢²á");
-			signup.setForeground(new Color(255, 105, 180));
+			JButton Regiser = new JButton("Regiser");
+			Regiser.setForeground(new Color(255, 105, 180));
 			
-			signup.addActionListener(new ActionListener() {
+			Regiser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				}
 			});
-			signup.setBounds(305, 294, 113, 27);
-			panel.add(signup);
+			Regiser.setBounds(305, 294, 113, 27);
+			panel.add(Regiser);
 			
 			JLabel touxiang = new JLabel("touxiang");
-			touxiang.setIcon(new ImageIcon("sources\\images\\Ã¨ßä3.jpg"));
 			touxiang.setBounds(10, 175, 153, 162);
 			panel.add(touxiang);
-			setIconImage(Toolkit.getDefaultToolkit().getImage("sources\\images\\Í·Ïñ.PNG"));
+			touxiang.setIcon(new ImageIcon("sources\\images\\çŒ«å’ª3.PNG"));
 			
 		}
 	
