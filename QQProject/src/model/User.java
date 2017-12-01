@@ -13,16 +13,17 @@ public class User implements Serializable{ //序列化：把一个Java对象写�
 	private String signature;//签名
 	private String imagePath;//图片
 	private Map<String ,HashSet<User>> friends;//创建一个Map属性来承装Uesr对象
-			// 用户的id,   //User
+			// 用户的朋友分组,   //分组里面每个朋友的信息集合
 	
 	public String getUsername() {
 		return username;
 	}
-	
-	public User(String username, String password) {
+
+	public User(String username, String password,String nickname) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.nickname = nickname;
 	}
 	public void setUsername(String username) {
 		this.username = username;
@@ -57,7 +58,8 @@ public class User implements Serializable{ //序列化：把一个Java对象写�
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
-	
+
+
 	public String getImagePath() {
 		return imagePath;
 	}
@@ -70,8 +72,15 @@ public class User implements Serializable{ //序列化：把一个Java对象写�
 	public void setFriends(Map<String, HashSet<User>> friends) {
 		this.friends = friends;
 	}
-	public User() {
+	public User(String string, String string2, String string3, int i, String string4, String string5, String string6) {
 		super();
+		this.username = username;
+		this.password = password;
+		this.sex = sex;
+		this.age = age;
+		this.nickname = nickname;
+		this.signature = signature;
+		this.imagePath = imagePath;
 		// TODO Auto-generated constructor stub
 	}
 	public User(String username, String password, String sex, int age, String nickname, String signature,

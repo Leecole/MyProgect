@@ -193,7 +193,7 @@ package com.demo.view;
 			JLabel touxiang = new JLabel("touxiang");
 			touxiang.setBounds(10, 175, 153, 162);
 			panel.add(touxiang);
-			touxiang.setIcon(new ImageIcon("sources\\images\\猫咪3.PNG"));
+			touxiang.setIcon(new ImageIcon("sources\\images\\猫咪3.jpg"));
 			
 		}
 	
