@@ -3,6 +3,7 @@ package com.demo.view;
 
 	import java.awt.BorderLayout;
 	import model.MessageBox;
+	import model.MessageBox;
 	import model.User;
 	import com.demo.view.MainFrame;
 	import java.awt.EventQueue;
@@ -55,6 +56,7 @@ package com.demo.view;
 		private Socket client;
 		private ObjectOutputStream out;
 		private ObjectInputStream in;
+		private MessageBox result;
 		
 
 
@@ -96,7 +98,7 @@ package com.demo.view;
 			setModalExclusionType(ModalExclusionType.TOOLKIT_EXCLUDE);
 			setBackground(new Color(255, 228, 196));
 			setForeground(new Color(255, 228, 196));
-			setTitle("LoginFrmae");
+			setTitle("LoginFrame");
 			setLocationRelativeTo(null);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setBounds(100, 100, 450, 411);
@@ -104,7 +106,7 @@ package com.demo.view;
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
-			//下拉选项
+			
 		
 			
 			
@@ -125,6 +127,7 @@ package com.demo.view;
 			
 			username = new JTextField("Please input your username");
 			username.setBackground(new Color(255, 228, 225));
+			username.setToolTipText("账号栏");
 			username.addFocusListener(new FocusListener() {//当鼠标聚焦时， 如果文本框中显示的是Please input your username时，则文本框清空，等待用户输入账号
 				@Override
 				public void focusGained(FocusEvent e) {
@@ -194,14 +197,14 @@ package com.demo.view;
 			String yourPassword=password.getText().toString().trim();
 			login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if(yourUsername.length()<=6) {
+					if(yourUsername.length()<2) {
 						JOptionPane.showMessageDialog(LoginFrame.this , "账号长度至少六位，请重新输入!","温馨提示",JOptionPane.ERROR_MESSAGE);
 						username.requestFocus();
 						return ;
 						
 					}
 					else {
-						if(yourPassword.length()<=6||yourPassword.length()>=16) {
+						if(yourPassword.length()<2||yourPassword.length()>16) {
 							JOptionPane.showMessageDialog(LoginFrame.this , "您输入的密码长度有误，请重新输入!","温馨提示",JOptionPane.ERROR_MESSAGE);
 							password.requestFocus();
 							return ;
@@ -212,9 +215,8 @@ package com.demo.view;
 									client=new Socket(Server.serverIP,Server.serverPort);
 									out=new ObjectOutputStream(client.getOutputStream());
 								    in=new ObjectInputStream(client.getInputStream());
-								} catch (UnknownHostException e) {
-									e.printStackTrace();
-								} catch (IOException e) {
+								
+								} catch (Exception e) {
 									e.printStackTrace();
 									JOptionPane.showMessageDialog(LoginFrame.this , "无法连接服务器，请检查网络！", "温馨提示", JOptionPane.ERROR_MESSAGE);
 								}
@@ -242,13 +244,9 @@ package com.demo.view;
 									{
 										User u=result.getFrom();//服务器给发送者客户端返回一个消息
 										MainFrame m=new MainFrame(u);
-									
-										LoginFrame.this .setVisible(false);
 										m.setVisible(true);
-										LoginFrame.this.setVisible(false);
+										//LoginFrame.this.setVisible(false);
 									}
-									
-									
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}
@@ -268,28 +266,38 @@ package com.demo.view;
 			panel.add(login);
 			
 			JButton Regiser = new JButton("Regiser");
+			
 			Regiser.setForeground(new Color(255, 105, 180));
+			Regiser.addFocusListener(new FocusListener() {
+				@Override
+				public void focusGained(FocusEvent e) {
+					login.setForeground(getForeground().blue);
+				}
+				@Override
+				public void focusLost(FocusEvent e) {
+					login.setForeground(new Color(255, 105, 180));
+				}
+			});
 			
 			Regiser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(client==null)
-					{
-						try {
+					
+					try {
+						if(client==null)
+						{
 							client=new Socket(Server.serverIP,Server.serverPort);
 							out=new ObjectOutputStream(client.getOutputStream());
 							in=new ObjectInputStream(client.getInputStream());
-						} catch (UnknownHostException e1) {
+						} 
+					
+					} catch (Exception e1) {
 							e1.printStackTrace();
-						} catch (IOException e1) {
-							e1.printStackTrace();
-							JOptionPane.showMessageDialog(LoginFrame.this,"无法连接服务器，请检查网络!","温馨提示",JOptionPane.ERROR_MESSAGE);
-							return ;
-				
-						}
-						RegisterFrame r=new RegisterFrame(out,in,LoginFrame.this);
-						r.setVisible(true);
-						LoginFrame.this.setVisible(false);
+						JOptionPane.showMessageDialog(LoginFrame.this,"无法连接服务器，请检查网络!","温馨提示",JOptionPane.ERROR_MESSAGE);
+						return ;
 					}
+					RegisterFrame r=new RegisterFrame(out,in,LoginFrame.this);
+					r.setVisible(true);
+					LoginFrame.this.setVisible(false);
 				}
 			});
 			Regiser.setBounds(305, 294, 113, 27);

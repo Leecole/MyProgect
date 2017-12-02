@@ -3,6 +3,8 @@ package com.demo.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -17,6 +19,13 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JEditorPane;
 import java.awt.Color;
+import javax.swing.JButton;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import com.demo.view.LoginFrame;
 
 public class RegisterFrame extends JFrame {
 
@@ -41,6 +50,7 @@ public class RegisterFrame extends JFrame {
 		this.out=out;
 		this.in=in;
 		this.login=login;
+		setIconImage(Toolkit.getDefaultToolkit().createImage("sources\\images\\1.jpg"));
 		setBackground(new Color(255, 228, 225));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 713);
@@ -90,6 +100,7 @@ public class RegisterFrame extends JFrame {
 		label.setBounds(27, 201, 38, 18);
 		panel.add(label);
 		
+		
 		JSpinner spinner = new JSpinner();
 		spinner.setBounds(95, 198, 55, 24);
 		panel.add(spinner);
@@ -119,14 +130,39 @@ public class RegisterFrame extends JFrame {
 		panel.add(tabbedPane);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(175, 238, 238));
 		tabbedPane.addTab("个性签名", null, panel_1, null);
 		panel_1.setLayout(null);
 		
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setBackground(new Color(255, 228, 225));
 		editorPane.setForeground(new Color(255, 255, 255));
-		editorPane.setBounds(0, 0, 427, 198);
+		editorPane.setBounds(0, 0, 427, 143);
 		panel_1.add(editorPane);
+		
+		JButton btnNewButton = new JButton("确定");
+		btnNewButton.setBackground(new Color(255, 255, 255));
+		btnNewButton.setForeground(new Color(165, 42, 42));
+		btnNewButton.setBounds(37, 156, 113, 27);
+		panel_1.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("去登录");
+		btnNewButton_1.setBackground(new Color(255, 255, 255));
+		btnNewButton_1.setForeground(new Color(165, 42, 42));
+		btnNewButton_1.setBounds(254, 156, 113, 27);
+		panel_1.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==btnNewButton_1) {
+					LoginFrame f=new LoginFrame();
+				}
+			}
+		}
+			
+		);
+		
 		
 		JLabel lblNewLabel_5 = new JLabel("昵称:");
 		lblNewLabel_5.setBounds(25, 259, 38, 18);
@@ -146,5 +182,4 @@ public class RegisterFrame extends JFrame {
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 	}
-
 }
