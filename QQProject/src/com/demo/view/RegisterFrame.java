@@ -3,6 +3,8 @@ package com.demo.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,28 +25,22 @@ public class RegisterFrame extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
+	private LoginFrame login;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegisterFrame frame = new RegisterFrame();
-					frame.setVisible(true);
-					frame.setIconImage(Toolkit.getDefaultToolkit().createImage("sources\\images\\1.jpg"));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
 	 */
-	public RegisterFrame() {
+	public RegisterFrame(ObjectOutputStream out, ObjectInputStream in, LoginFrame login) {
+		this.out=out;
+		this.in=in;
+		this.login=login;
 		setBackground(new Color(255, 228, 225));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 713);
@@ -150,4 +146,5 @@ public class RegisterFrame extends JFrame {
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 	}
+
 }

@@ -77,12 +77,12 @@ public class DataBase {
 */
 	public static void main(String[] args) {
 		
-		User user1=new User("111", "111", "female",20,"豆奶", "牵本宝宝的手","sources/images/fafa2.PNG");
-		User user2=new User("222", "222", "male",21,"A~bug", "官方了人体后i好几天","sources/images/fafa3.PNG");
-		User user3=new User("333", "333", "female",22,"撒反对法国", "人d结构接口","sources/images/fafa4.PNG");
-		User user4=new User("444", "444", "male",23,"个人提供fig好吧", "通风后具体看","sources/images/fafa5.PNG");
-		User user5=new User("555", "555", "female",20,"士大夫的电视柜", "人工软件","sources/images/fafa6.PNG");
-		User user6=new User("666", "666", "male",19,"时代的回复", "人噶额是肯定","sources/images/fafa7.PNG");
+		User user1=new User("1903502725", "555555", "female",20,"豆奶", "牵本宝宝的手","sources/images/fafa2.PNG");
+		User user2=new User("1903502726", "666666", "male",21,"A~bug", "官方了人体后i好几天","sources/images/fafa3.PNG");
+		User user3=new User("1903502727", "777777", "female",22,"撒反对法国", "人d结构接口","sources/images/fafa4.PNG");
+		User user4=new User("1903502728", "888888", "male",23,"个人提供fig好吧", "通风后具体看","sources/images/fafa5.PNG");
+		User user5=new User("1903502729", "999999", "female",20,"士大夫的电视柜", "人工软件","sources/images/fafa6.PNG");
+		User user6=new User("1903502730", "000000", "male",19,"时代的回复", "人噶额是肯定","sources/images/fafa7.PNG");
 		
 		
 	

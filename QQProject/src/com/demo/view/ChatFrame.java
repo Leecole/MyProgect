@@ -84,7 +84,7 @@ public class ChatFrame extends JFrame {
 		panel.add(clientInformation);
 		
 		returnMenuFrame = new JTextField();
-		returnMenuFrame.setText("<Message(n)");
+		returnMenuFrame.setText("<Message");
 		returnMenuFrame.setBounds(0, 27, 86, 24);
 		panel.add(returnMenuFrame);
 		returnMenuFrame.setColumns(10);

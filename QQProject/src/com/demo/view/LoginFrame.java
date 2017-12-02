@@ -2,6 +2,9 @@ package com.demo.view;
 
 
 	import java.awt.BorderLayout;
+	import model.MessageBox;
+	import model.User;
+	import com.demo.view.MainFrame;
 	import java.awt.EventQueue;
 	import java.awt.FocusTraversalPolicy;
 	import java.awt.HeadlessException;
@@ -16,15 +19,25 @@ package com.demo.view;
 	import javax.swing.border.EmptyBorder;
 
 
+
+	import Contral.Server;
+	
 	import javax.swing.JTextField;
 	import javax.swing.JPasswordField;
 	import java.awt.Color;
 	import javax.swing.JButton;
+	import javax.swing.JComboBox;
+	
 	import java.awt.event.ActionListener;
 	import java.awt.event.FocusEvent;
 	import java.awt.event.FocusListener;
 	import java.awt.event.KeyEvent;
 	import java.awt.event.KeyListener;
+	import java.io.IOException;
+	import java.io.ObjectInputStream;
+	import java.io.ObjectOutputStream;
+	import java.net.Socket;
+	import java.net.UnknownHostException;
 	import java.awt.event.ActionEvent;
 	import javax.swing.JToolBar;
 	import javax.swing.SwingConstants;
@@ -37,6 +50,13 @@ package com.demo.view;
 		private JPanel contentPane;
 		private JTextField username;
 		private JPasswordField password;
+		private JComboBox comboBox;
+		private JPasswordField passwordField;
+		private Socket client;
+		private ObjectOutputStream out;
+		private ObjectInputStream in;
+		
+
 
 		/**
 		 * Launch the application.
@@ -84,6 +104,9 @@ package com.demo.view;
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
+			//下拉选项
+		
+			
 			
 			JPanel panel = new JPanel();
 			panel.setBounds(0, 13, 430, 363);
@@ -102,24 +125,14 @@ package com.demo.view;
 			
 			username = new JTextField("Please input your username");
 			username.setBackground(new Color(255, 228, 225));
-			username.addKeyListener(new KeyListener(){//����̨�������������¼�
-				@Override
-				public void keyPressed(KeyEvent e) {}
-				@Override
-				public void keyReleased(KeyEvent e) {}
-				@Override
-				public void keyTyped(KeyEvent e) {
-					System.out.println("��������û���\n"+username.getText());
-				}
-			});
-			username.addFocusListener(new FocusListener() {//�����۽�ʱ�� ����ı�������ʾ����Please input your usernameʱ�����ı�����գ��ȴ��û������˺�
+			username.addFocusListener(new FocusListener() {//当鼠标聚焦时， 如果文本框中显示的是Please input your username时，则文本框清空，等待用户输入账号
 				@Override
 				public void focusGained(FocusEvent e) {
 					if(username.getText().equals("Please input your username"))
 						username.setText("");
 				}
 				@Override
-				public void focusLost(FocusEvent e) {//��������ߵ�ʱ������û���Ϊ�գ�����ʾPlease input your username����ı���ʾ��
+				public void focusLost(FocusEvent e) {//当鼠标移走的时候，如果用户名为空，则显示Please input your username这个文本提示框
 					if(username.getText().length()==0)
 						username.setText("Please input your username");
 				}
@@ -131,25 +144,25 @@ package com.demo.view;
 			
 			password = new JPasswordField();
 			password.setBackground(new Color(255, 228, 225));
-			password.setToolTipText("\u8BF7\u8F93\u5165\u5BC6\u7801");
+			password.setToolTipText("密码框");
 			password.addFocusListener(new FocusListener() {
 
 				@Override
 				public void focusGained(FocusEvent e) {
-					if(password.getText().equals("����������"))
+					if(password.getText().equals("Please input your password"))
 						password.setText("");
 				}
 				@Override
 				public void focusLost(FocusEvent e) {
 					if(password.getText().length()==0)
-						password.setText("����������");
+						password.setText("请输入您的密码");
 				}
 			} );
-			password.setText("����������");
+			password.setText("请输入密码");
 			password.setBounds(177, 235, 169, 24);
 			panel.add(password);
 			
-			JLabel username = new JLabel("Username");//�˺������
+			JLabel username = new JLabel("Username");//
 			username.setBackground(new Color(0, 204, 51));
 			username.setEnabled(false);
 			username.setBounds(360, 201, 72, 18);
@@ -166,9 +179,9 @@ package com.demo.view;
 				@Override
 				public void focusGained(FocusEvent e) {
 					login.setForeground(getForeground().blue);
-					boolean result=username.getText()!=null&&password.getText()!=null;
+					boolean result=username.getText()==null||password.getText()==null;
 					if(result) {
-						JOptionPane.showMessageDialog(LoginFrame.this ,result?" Login Successfully ":"Login Failure" );//����һ����Ϣ��ʾ��
+						JOptionPane.showMessageDialog(LoginFrame.this, "账号或者密码不能为空！！ ","提示",JOptionPane.ERROR_MESSAGE);
 					}
 				
 				}
@@ -176,6 +189,80 @@ package com.demo.view;
 				public void focusLost(FocusEvent e) {
 					login.setForeground(new Color(255, 105, 180));
 				}
+			});
+			String yourUsername=username.getText().toString().trim();
+			String yourPassword=password.getText().toString().trim();
+			login.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if(yourUsername.length()<=6) {
+						JOptionPane.showMessageDialog(LoginFrame.this , "账号长度至少六位，请重新输入!","温馨提示",JOptionPane.ERROR_MESSAGE);
+						username.requestFocus();
+						return ;
+						
+					}
+					else {
+						if(yourPassword.length()<=6||yourPassword.length()>=16) {
+							JOptionPane.showMessageDialog(LoginFrame.this , "您输入的密码长度有误，请重新输入!","温馨提示",JOptionPane.ERROR_MESSAGE);
+							password.requestFocus();
+							return ;
+						}
+						else {
+							if(client==null) {
+								try {
+									client=new Socket(Server.serverIP,Server.serverPort);
+									out=new ObjectOutputStream(client.getOutputStream());
+								    in=new ObjectInputStream(client.getInputStream());
+								} catch (UnknownHostException e) {
+									e.printStackTrace();
+								} catch (IOException e) {
+									e.printStackTrace();
+									JOptionPane.showMessageDialog(LoginFrame.this , "无法连接服务器，请检查网络！", "温馨提示", JOptionPane.ERROR_MESSAGE);
+								}
+								
+								try {
+									//消息要封装成对象.传递消息要用Object流
+									
+									
+									
+									MessageBox  loginMessage=new MessageBox();//把登录消息封装成MessageBox
+									User willLoginUser=new User(yourUsername,yourPassword);
+									loginMessage.setFrom(willLoginUser);
+									loginMessage.setType("login");
+									
+									//封装完消息后使用序列化流将消息对象写向网络网络另外一端
+									out.writeObject(loginMessage);
+									out.flush();
+									
+									//当客户端把登陆消息发送出去后，应该立马读取服务器回发的登陆结果消息
+									
+									MessageBox  result=(MessageBox)in.readObject();
+									if(result.getFrom()==null) {
+										JOptionPane.showMessageDialog(LoginFrame.this, "登陆失败,请检查用户名和密码!","温馨提示",JOptionPane.ERROR_MESSAGE);
+									}else
+									{
+										User u=result.getFrom();//服务器给发送者客户端返回一个消息
+										MainFrame m=new MainFrame(u);
+									
+										LoginFrame.this .setVisible(false);
+										m.setVisible(true);
+										LoginFrame.this.setVisible(false);
+									}
+									
+									
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+								
+								
+							}
+						}
+						
+						
+					}
+					
+				}
+				
+				
 			});
 			login.setBounds(178, 294, 113, 27);
 			panel.add(login);
@@ -185,6 +272,24 @@ package com.demo.view;
 			
 			Regiser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if(client==null)
+					{
+						try {
+							client=new Socket(Server.serverIP,Server.serverPort);
+							out=new ObjectOutputStream(client.getOutputStream());
+							in=new ObjectInputStream(client.getInputStream());
+						} catch (UnknownHostException e1) {
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+							JOptionPane.showMessageDialog(LoginFrame.this,"无法连接服务器，请检查网络!","温馨提示",JOptionPane.ERROR_MESSAGE);
+							return ;
+				
+						}
+						RegisterFrame r=new RegisterFrame(out,in,LoginFrame.this);
+						r.setVisible(true);
+						LoginFrame.this.setVisible(false);
+					}
 				}
 			});
 			Regiser.setBounds(305, 294, 113, 27);

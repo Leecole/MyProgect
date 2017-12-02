@@ -15,6 +15,7 @@ public class User implements Serializable{ //序列化：把一个Java对象写�
 	private Map<String ,HashSet<User>> friends;//创建一个Map属性来承装Uesr对象
 			// 用户的朋友分组,   //分组里面每个朋友的信息集合
 	
+	
 	public String getUsername() {
 		return username;
 	}
@@ -95,6 +96,11 @@ public class User implements Serializable{ //序列化：把一个Java对象写�
 		this.imagePath = imagePath;
 		this.friends = friends;
 	}
+	public User(String username, String password) {
+		this.username=username;
+		this.password=password;
+	}
+
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", sex=" + sex + ", age=" + age + ", nickname="

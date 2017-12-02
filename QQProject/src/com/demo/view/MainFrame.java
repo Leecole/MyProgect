@@ -7,6 +7,9 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.User;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
@@ -19,27 +22,11 @@ public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNickname;
+	private User user;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public MainFrame() {
+	      
+	public MainFrame(User user) {
+		this.user=user;
 		setTitle("MainFrame");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 771);
@@ -74,7 +61,7 @@ public class MainFrame extends JFrame {
 		
 		JPanel signname = new JPanel();
 		signname.setBackground(new Color(255, 240, 245));
-		tabbedPane_1.addTab("¸öÐÔÇ©Ãû", null, signname, null);
+		tabbedPane_1.addTab("ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½", null, signname, null);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 213, 432, 511);
@@ -83,8 +70,8 @@ public class MainFrame extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		scrollPane.setViewportView(tabbedPane);
 		
-		JPanel message = new JPanel();//ÏûÏ¢
-		tabbedPane.addTab("ÏûÏ¢", null, message, null);
+		JPanel message = new JPanel();//ï¿½ï¿½Ï¢
+		tabbedPane.addTab("ï¿½ï¿½Ï¢", null, message, null);
 		message.setLayout(null);
 		
 		JList list = new JList();
@@ -93,7 +80,7 @@ public class MainFrame extends JFrame {
 		message.add(list);
 		
 		JPanel friend = new JPanel();
-		tabbedPane.addTab("ºÃÓÑ", null, friend, null);
+		tabbedPane.addTab("ï¿½ï¿½ï¿½ï¿½", null, friend, null);
 		friend.setLayout(null);
 		
 		JTree tree = new JTree();
@@ -101,7 +88,7 @@ public class MainFrame extends JFrame {
 		friend.add(tree);
 		
 		JPanel group = new JPanel();
-		tabbedPane.addTab("Èº×é", null, group, null);
+		tabbedPane.addTab("Èºï¿½ï¿½", null, group, null);
 		group.setLayout(null);
 	}
 }
