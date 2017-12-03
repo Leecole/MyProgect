@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 
+import com.demo.view.ServerFrame;
+
 //把一个Java对象变成字节流的形式传出去，或者从一个字节流中恢复一个Java对象
 //序列化：要用到OutputStream类下面的子类ObjectOutput-WriteObject(Object object)
 

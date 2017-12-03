@@ -73,29 +73,41 @@ public class User implements Serializable{ //序列化：把一个Java对象写�
 	public void setFriends(Map<String, HashSet<User>> friends) {
 		this.friends = friends;
 	}
-	public User(String string, String string2, String string3, int i, String string4, String string5, String string6) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.sex = sex;
-		this.age = age;
-		this.nickname = nickname;
-		this.signature = signature;
-		this.imagePath = imagePath;
-		// TODO Auto-generated constructor stub
-	}
-	public User(String username, String password, String sex, int age, String nickname, String signature,
-			String imagePath, Map<String, HashSet<User>> friends) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.sex = sex;
-		this.age = age;
-		this.nickname = nickname;
-		this.signature = signature;
-		this.imagePath = imagePath;
-		this.friends = friends;
-	}
+//	public User(String username, String string2, String string3, int i, String string4, String string5, String string6) {
+//		super();
+//		this.username = username;
+//		this.password = password;
+//		this.sex = sex;
+//		this.age = age;
+//		this.nickname = nickname;
+//		this.signature = signature;
+//		this.imagePath = imagePath;
+//		// TODO Auto-generated constructor stub
+//	}
+	public User(String username, String password, String sex, int age, String nickname, String signature, String imagePath,
+		Map<String, HashSet<User>> friends) {
+	super();
+	this.username = username;
+	this.password = password;
+	this.sex = sex;
+	this.age = age;
+	this.nickname = nickname;
+	this.signature = signature;
+	this.imagePath = imagePath;
+	this.friends = friends;
+}
+
+	public User(String username, String password, String sex, int age, String nickname, String signature,String imagePath) {
+	super();
+	this.username = username;
+	this.password = password;
+	this.sex = sex;
+	this.age = age;
+	this.nickname = nickname;
+	this.signature = signature;
+	this.imagePath = imagePath;
+}
+
 	public User(String username, String password) {
 		this.username=username;
 		this.password=password;

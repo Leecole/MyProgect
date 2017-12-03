@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import model.User;
 
 public class DataBase {
@@ -21,7 +23,7 @@ public class DataBase {
 	//把对象写入文件夹中 ~~~~~~对象的序列化
 	public static boolean register(User user) {
 		//新建一个数据通道（文件）
-		File data=new File("database1/"+user.getUsername()+".txt");
+		File data=new File("databases/"+user.getUsername()+".qq");
 		if(data.exists()) return false;
 		else return updateFile(user);
 	}
@@ -29,7 +31,7 @@ public class DataBase {
 		ObjectOutputStream out;//对象输出流，将对象写入到输出流中 out.wirte(); out.close
 		try {
 			//建立数据通道
-			FileOutputStream fos=new FileOutputStream("database1/"+user.getUsername()+".txt");
+			FileOutputStream fos=new FileOutputStream("databases/"+user.getUsername()+".qq");
 			
 			//建立对象输出流对象
 			out = new ObjectOutputStream(fos);//将文件写入database这个文件夹
@@ -47,7 +49,7 @@ public class DataBase {
 	
 	//把文件中的信息读取出来~~~~~~~~对象的反序列化
 	public static User login(String username,String password) {
-		File data=new File("database1/"+username+".txt");
+		File data=new File("databases/"+username+".qq");
 		
 		if(!data.exists()) {//对象不存在时，返回一个空，表示在数据库里找不到当前用户
 			return null;
@@ -55,7 +57,7 @@ public class DataBase {
 		else {//对象在当前数据库里面存在
 			try {
 				//建立数据通道 
-				FileInputStream fis=new FileInputStream("database1/"+username+"txt");
+				FileInputStream fis=new FileInputStream("databases/"+username+".qq");
 				
 				//对象输入流，从输入流中读取java对象,in.read();
 				ObjectInputStream in=new ObjectInputStream(fis);
@@ -67,24 +69,22 @@ public class DataBase {
 					else return null;
 			} catch (Exception e) {
 				e.printStackTrace();
-				
+				return null;
 			}
-		return null;	
-		}	
+		}
 	} 
 	/*public static User searchFriendsByCondition(String username,String nickname) {//查找
 	
-	}
-*/
+	}*/
+
 	public static void main(String[] args) {
-		
-		User user1=new User("1903502725", "555555", "female",20,"豆奶", "牵本宝宝的手","sources/images/fafa2.PNG");
-		User user2=new User("1903502726", "666666", "male",21,"A~bug", "官客户交付好几天","sources/images/fafa3.PNG");
-		User user3=new User("1903502727", "777777", "female",22,"撒反对法国", "人d结构接口","sources/images/fafa4.PNG");
-		User user4=new User("1903502728", "888888", "male",23,"个人提供fig好吧", "通风后具体看","sources/images/fafa5.PNG");
-		User user5=new User("1903502729", "999999", "female",20,"士大夫的电视柜", "人工软件","sources/images/fafa6.PNG");
-		User user6=new User("1903502730", "000000", "male",19,"时代的回复", "人噶额是肯定","sources/images/fafa7.PNG");
-		User user7=new User("1903502731", "111111", "male",20,"时代的感觉复", "见面会刚吃饭定","sources/images/fafa8.PNG");
+		User user1=new User("111", "111", "female",20,"豆奶", "牵本宝宝的手","sources/images/1.jpg");
+		User user2=new User("222", "222", "male",21,"A~bug", "官客户交付好几天","sources/images/fafa3.PNG");
+		User user3=new User("333", "333", "female",22,"撒反对法国", "人d结构接口","sources/images/fafa4.PNG");
+		User user4=new User("444", "444", "male",23,"个人提供fig好吧", "通风后具体看","sources/images/fafa5.PNG");
+		User user5=new User("555", "555", "female",20,"士大夫的电视柜", "人工软件","sources/images/fafa6.PNG");
+		User user6=new User("666", "666", "male",19,"时代的回复", "人噶额是肯定","sources/images/fafa7.PNG");
+		User user7=new User("777", "777", "male",20,"时代的感觉复", "见面会刚吃饭定","sources/images/fafa8.PNG");
 		
 		
 	
@@ -105,51 +105,65 @@ public class DataBase {
 					HashSet<User>  f3s=new HashSet<>();
 					f3s.add(user6);
 					f3s.add(user7);
-					
-					friend.put("暗恋的对象", f3s);
-					
+					friend.put("大傻比", f3s);
 					user1.setFriends(friend);
+					
+				
 				
 					
 			try {
-				ObjectOutputStream  out=new ObjectOutputStream(new FileOutputStream("database1/"+user1.getUsername()+".txt"));
+				ObjectOutputStream  out=new ObjectOutputStream(new FileOutputStream("databases/"+user1.getUsername()+".qq"));
 				out.writeObject(user1);
 				out.flush();
 				out.close();
 				
-				out=new ObjectOutputStream(new FileOutputStream("database1/"+user2.getUsername()+".txt"));
+				out=new ObjectOutputStream(new FileOutputStream("databases/"+user2.getUsername()+".qq"));
 				out.writeObject(user2);
 				out.flush();
 				out.close();
 				
-				out=new ObjectOutputStream(new FileOutputStream("database1/"+user3.getUsername()+".txt"));
+				out=new ObjectOutputStream(new FileOutputStream("databases/"+user3.getUsername()+".qq"));
 				out.writeObject(user3);
 				out.flush();
 				out.close();
 				
-				out=new ObjectOutputStream(new FileOutputStream("database1/"+user4.getUsername()+".txt"));
+				out=new ObjectOutputStream(new FileOutputStream("databases/"+user4.getUsername()+".qq"));
 				out.writeObject(user4);
 				out.flush();
 				out.close();
-				out=new ObjectOutputStream(new FileOutputStream("database1/"+user5.getUsername()+".txt"));
+				out=new ObjectOutputStream(new FileOutputStream("databases/"+user5.getUsername()+".qq"));
 				out.writeObject(user5);
 				out.flush();
 				out.close();
-				out=new ObjectOutputStream(new FileOutputStream("database1/"+user6.getUsername()+".txt"));
+				out=new ObjectOutputStream(new FileOutputStream("databases/"+user6.getUsername()+".qq"));
 				out.writeObject(user6);
 				out.flush();
 				out.close();
-				out=new ObjectOutputStream(new FileOutputStream("database1/"+user7.getUsername()+".txt"));
+				out=new ObjectOutputStream(new FileOutputStream("databases/"+user7.getUsername()+".qq"));
 				out.writeObject(user7);
 				out.flush();
 				out.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
 		}
+	public static void login(User u) {
+		
+		ObjectOutputStream out;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream("databases/"+u.getUsername()+".qq"));
+			out.writeObject(u);
+			out.flush();
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+				
+	}
 	
 	
 }

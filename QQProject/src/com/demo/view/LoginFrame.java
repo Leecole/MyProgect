@@ -39,7 +39,10 @@ package com.demo.view;
 	import java.io.ObjectOutputStream;
 	import java.net.Socket;
 	import java.net.UnknownHostException;
-	import java.awt.event.ActionEvent;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Scanner;
+import java.awt.event.ActionEvent;
 	import javax.swing.JToolBar;
 	import javax.swing.SwingConstants;
 	import java.awt.Dialog.ModalExclusionType;
@@ -49,14 +52,19 @@ package com.demo.view;
 	public class LoginFrame  extends JFrame {
 
 		private JPanel contentPane;
-		private JTextField username;
+		private JTextField account;
 		private JPasswordField password;
 		private JComboBox comboBox;
 		private JPasswordField passwordField;
 		private Socket client;
+		private JLabel username,passwordText;
 		private ObjectOutputStream out;
 		private ObjectInputStream in;
-		private MessageBox result;
+		private MessageBox result , loginMessage;
+		private JButton regiser,login ;
+		private JLabel touxiang,beijing;
+		private JPanel panel_1 ,panel;
+		private User user;
 		
 
 
@@ -68,7 +76,6 @@ package com.demo.view;
 				JLabel lable=new JLabel(im);
 		}
 		*/
-		
 		public static void main(String[] args) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
@@ -83,7 +90,7 @@ package com.demo.view;
 				
 			});
 		}
-
+		
 		public LoginFrame(JPanel contentPane) throws HeadlessException {
 			super();
 			this.contentPane = contentPane;
@@ -93,6 +100,7 @@ package com.demo.view;
 		 * Create the frame.
 		 */
 		public  LoginFrame() {
+			
 			setResizable(false);
 			setAlwaysOnTop(true);
 			setModalExclusionType(ModalExclusionType.TOOLKIT_EXCLUDE);
@@ -110,40 +118,32 @@ package com.demo.view;
 		
 			
 			
-			JPanel panel = new JPanel();
+			panel = new JPanel();
 			panel.setBounds(0, 13, 430, 363);
 			contentPane.add(panel);
 			panel.setLayout(null);
 			
-			JPanel panel_1 = new JPanel();
+			 panel_1 = new JPanel();
 			panel_1.setBounds(0, 0, 432, 162);
 			panel.add(panel_1);
 			panel_1.setLayout(null);
 			
-			JLabel beijin = new JLabel("New label");
-			beijin.setIcon(new ImageIcon("sources\\images\\me_1.PNG"));
-			beijin.setBounds(8, -13, 434, 175);
-			panel_1.add(beijin);
+			beijing = new JLabel("New label");//背景
+			beijing.setIcon(new ImageIcon("sources\\images\\me_1.PNG"));
+			beijing.setBounds(8, -13, 434, 175);
+			panel_1.add(beijing);
 			
-			username = new JTextField("Please input your username");
-			username.setBackground(new Color(255, 228, 225));
-			username.setToolTipText("账号栏");
-			username.addFocusListener(new FocusListener() {//当鼠标聚焦时， 如果文本框中显示的是Please input your username时，则文本框清空，等待用户输入账号
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(username.getText().equals("Please input your username"))
-						username.setText("");
-				}
-				@Override
-				public void focusLost(FocusEvent e) {//当鼠标移走的时候，如果用户名为空，则显示Please input your username这个文本提示框
-					if(username.getText().length()==0)
-						username.setText("Please input your username");
-				}
-			});
+			Map<String,HashSet<User>> users;
+			HashSet<User> u1;
 			
-			username.setBounds(177, 198, 169, 24);
-			panel.add(username);
-			username.setColumns(10);
+			comboBox = new JComboBox(new Object[] {"111","222","333","444","555","666","777"});
+			comboBox.setEditable(true);
+			comboBox.setToolTipText("账号栏");
+			comboBox.setBackground(new Color(255, 228, 225));
+			contentPane.add(comboBox);
+			comboBox.setBounds(177, 198, 169, 24);
+			panel.add(comboBox);
+		
 			
 			password = new JPasswordField();
 			password.setBackground(new Color(255, 228, 225));
@@ -158,65 +158,68 @@ package com.demo.view;
 				@Override
 				public void focusLost(FocusEvent e) {
 					if(password.getText().length()==0)
-						password.setText("请输入您的密码");
+						password.setText("");
 				}
 			} );
 			password.setText("请输入密码");
 			password.setBounds(177, 235, 169, 24);
 			panel.add(password);
 			
-			JLabel username = new JLabel("Username");//
+			
+			
+			username = new JLabel("账号");
 			username.setBackground(new Color(0, 204, 51));
 			username.setEnabled(false);
 			username.setBounds(360, 201, 72, 18);
 			panel.add(username);
 			
-			JLabel password = new JLabel("Password");
-			password.setEnabled(false);
-			password.setBounds(360, 238, 72, 18);
-			panel.add(password);
+			passwordText = new JLabel("密码");
+			passwordText.setEnabled(false);
+			passwordText.setBounds(360, 238, 72, 18);
+			panel.add(passwordText);
 			
-			JButton login = new JButton("Login");
+			
+			
+			
+			login = new JButton("Login");//登陆方法
 			login.setForeground(new Color(255, 105, 180));
 			login.addFocusListener(new FocusListener() {
 				@Override
 				public void focusGained(FocusEvent e) {
 					login.setForeground(getForeground().blue);
-					boolean result=username.getText()==null||password.getText()==null;
-					if(result) {
-						JOptionPane.showMessageDialog(LoginFrame.this, "账号或者密码不能为空！！ ","提示",JOptionPane.ERROR_MESSAGE);
-					}
-				
 				}
 				@Override
 				public void focusLost(FocusEvent e) {
 					login.setForeground(new Color(255, 105, 180));
 				}
 			});
-			String yourUsername=username.getText().toString().trim();
-			String yourPassword=password.getText().toString().trim();
 			login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
+					String yourUsername=comboBox.getSelectedItem().toString().trim();
+					String yourPassword=password.getText().toString().trim();
+					System.out.println(yourUsername);
+					System.out.println(yourPassword);
 					if(yourUsername.length()<2) {
-						JOptionPane.showMessageDialog(LoginFrame.this , "账号长度至少六位，请重新输入!","温馨提示",JOptionPane.ERROR_MESSAGE);
-						username.requestFocus();
+						JOptionPane.showMessageDialog(LoginFrame.this , "账号长度至少3位，请重新输入!","温馨提示",JOptionPane.ERROR_MESSAGE);
+						comboBox.requestFocus();//自动定位到当前的错误栏
 						return ;
 						
 					}
 					else {
-						if(yourPassword.length()<2||yourPassword.length()>16) {
+						if(yourPassword.length()<3||yourPassword.length()>16) {
 							JOptionPane.showMessageDialog(LoginFrame.this , "您输入的密码长度有误，请重新输入!","温馨提示",JOptionPane.ERROR_MESSAGE);
 							password.requestFocus();
 							return ;
 						}
-						else {
-							if(client==null) {
-								try {
+						else {	
+							try {
+								if(client==null) {
+							
 									client=new Socket(Server.serverIP,Server.serverPort);
 									out=new ObjectOutputStream(client.getOutputStream());
 								    in=new ObjectInputStream(client.getInputStream());
-								
-								} catch (Exception e) {
+								}
+							} catch (Exception e) {
 									e.printStackTrace();
 									JOptionPane.showMessageDialog(LoginFrame.this , "无法连接服务器，请检查网络！", "温馨提示", JOptionPane.ERROR_MESSAGE);
 								}
@@ -226,7 +229,7 @@ package com.demo.view;
 									
 									
 									
-									MessageBox  loginMessage=new MessageBox();//把登录消息封装成MessageBox
+									loginMessage=new MessageBox();//把登录消息封装成MessageBox
 									User willLoginUser=new User(yourUsername,yourPassword);
 									loginMessage.setFrom(willLoginUser);
 									loginMessage.setType("login");
@@ -237,7 +240,7 @@ package com.demo.view;
 									
 									//当客户端把登陆消息发送出去后，应该立马读取服务器回发的登陆结果消息
 									
-									MessageBox  result=(MessageBox)in.readObject();
+									result=(MessageBox)in.readObject();
 									if(result.getFrom()==null) {
 										JOptionPane.showMessageDialog(LoginFrame.this, "登陆失败,请检查用户名和密码!","温馨提示",JOptionPane.ERROR_MESSAGE);
 									}else
@@ -245,7 +248,7 @@ package com.demo.view;
 										User u=result.getFrom();//服务器给发送者客户端返回一个消息
 										MainFrame m=new MainFrame(u);
 										m.setVisible(true);
-										//LoginFrame.this.setVisible(false);
+										LoginFrame.this.setVisible(false);
 									}
 								} catch (Exception e1) {
 									e1.printStackTrace();
@@ -261,14 +264,12 @@ package com.demo.view;
 				}
 				
 				
-			});
+			);
 			login.setBounds(178, 294, 113, 27);
 			panel.add(login);
-			
-			JButton Regiser = new JButton("Regiser");
-			
-			Regiser.setForeground(new Color(255, 105, 180));
-			Regiser.addFocusListener(new FocusListener() {
+			regiser = new JButton("Regiser");
+			regiser.setForeground(new Color(255, 105, 180));
+			regiser.addFocusListener(new FocusListener() {
 				@Override
 				public void focusGained(FocusEvent e) {
 					login.setForeground(getForeground().blue);
@@ -279,7 +280,7 @@ package com.demo.view;
 				}
 			});
 			
-			Regiser.addActionListener(new ActionListener() {
+			regiser.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
 					try {
@@ -300,10 +301,9 @@ package com.demo.view;
 					LoginFrame.this.setVisible(false);
 				}
 			});
-			Regiser.setBounds(305, 294, 113, 27);
-			panel.add(Regiser);
-			
-			JLabel touxiang = new JLabel("touxiang");
+			regiser.setBounds(305, 294, 113, 27);
+			panel.add(regiser);
+			touxiang = new JLabel("touxiang");
 			touxiang.setBounds(10, 175, 153, 162);
 			panel.add(touxiang);
 			touxiang.setIcon(new ImageIcon("sources\\images\\猫咪3.jpg"));

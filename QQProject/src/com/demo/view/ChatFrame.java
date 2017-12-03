@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import model.User;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -35,6 +37,7 @@ public class ChatFrame extends JFrame {
 	private JTextField returnMenuFrame;
 	private JPanel sendfield;
 	private JTable table_1;
+	private AllActionListener listener;
 	
 
 	/**
@@ -73,18 +76,19 @@ public class ChatFrame extends JFrame {
 		panel.setLayout(null);
 		
 		Clientnickname = new JTextField();
-		Clientnickname.setText("clientNickname\r\n");
+		Clientnickname.setText("用户名\r\n");
+		Clientnickname.addActionListener(listener);
 		Clientnickname.setBounds(127, 27, 132, 24);
 		panel.add(Clientnickname);
 		Clientnickname.setColumns(10);
 		
-		JLabel clientInformation = new JLabel("clientInformation\r\n");
+		JLabel clientInformation = new JLabel();
 		clientInformation.setIcon(new ImageIcon("sources\\images\\clientMessage.PNG"));
 		clientInformation.setBounds(346, 0, 86, 78);
 		panel.add(clientInformation);
 		
 		returnMenuFrame = new JTextField();
-		returnMenuFrame.setText("<Message");
+		returnMenuFrame.setText("消息");
 		returnMenuFrame.setBounds(0, 27, 86, 24);
 		panel.add(returnMenuFrame);
 		returnMenuFrame.setColumns(10);
@@ -116,8 +120,7 @@ public class ChatFrame extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setToolTipText("\u8868\u60C5\u5305\u96C6\u5408");
-		tabbedPane.addTab("�����", null, panel_1, null);
+		tabbedPane.addTab("表情", null, panel_1, null);
 		panel_1.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -129,6 +132,13 @@ public class ChatFrame extends JFrame {
 		JTable table=new JTable(6,8);
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("ͼƬ", null, panel_3, null);
+		tabbedPane.addTab("抖动", null, panel_3, null);
+	}
+	class AllActionListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		}
+		
 	}
 }

@@ -53,6 +53,7 @@ public class ServerFrame extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private  JButton  button1,button2;
+	private MessageBox loginResult,registerResultMessage,m;
 	/**
 	 * Launch the application.
 	 */
@@ -158,13 +159,11 @@ public class ServerFrame extends JFrame {
 								while(true) {//只要有客户端接进来，服务器就连接
 									try {
 										Socket s=server.accept();
-										System.out.println("fgjhgdnmhgcfmdhje ");
 										System.out.println(s.getInetAddress());//获取连接进来的客户端的ip地址
 										ObjectOutputStream out=new ObjectOutputStream(s.getOutputStream());//把新连接进来的客户信息对象通过输出流来写入
 										ObjectInputStream  in=new  ObjectInputStream(s.getInputStream());//把新连接进来的客户对像通过输入流读取
 										ClientMessageReciveThread  thisClientThread=new ClientMessageReciveThread(out,in);
 										thisClientThread.start();
-										
 									}catch (Exception e2) {
 									}
 								}
@@ -206,13 +205,13 @@ public class ServerFrame extends JFrame {
 				try {
 					while(true) {//一直读取客户端发送过来的消息
 					
-						MessageBox m=(MessageBox)in.readObject();//当前线程接收一个来自客户端的发送过来的一个messagebox对象
+						 m=(MessageBox)in.readObject();//当前线程接收一个来自客户端的发送过来的一个messagebox对象
 						System.out.println(m);
 						if(m.getType().equals("login")) {
-							processLoginMEssage(m);
+							processLoginMessage(m);
 						}
 						if(m.getType().equals("register")) {
-							processLoginMEssage(m);
+							processRegisterMessage(m);
 						}
 						if(m.getType().equals("addFriend")) {
 						}
@@ -224,19 +223,19 @@ public class ServerFrame extends JFrame {
 						}
 						
 					}
-				} catch (ClassNotFoundException | IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 					
 				}
-		private void processLoginMEssage(MessageBox m) {//链接数据判断用户登录信息是否正确
+		private void processLoginMessage(MessageBox m) {//链接数据判断用户登录信息是否正确
 			User loginUser=DataBase.login(m.getFrom().getUsername(), m.getFrom().getPassword());
 			if(loginUser!=null) {//如果登录成功，需要更新服务器窗口上显示的用户信息列表
 				model=new DefaultTableModel(new Object[][] {{loginUser.getUsername(),loginUser.getNickname()}},tableTitle ) ;
 				table.setModel(model);	
 			}
 			//登录之后服务器应该给发送者。也就是User.from返回一个信息，也用MessageBox封装
-			MessageBox loginResult=new MessageBox();
+			loginResult=new MessageBox();
 			loginResult.setFrom(loginUser);
 			loginResult.setType("loginResult");
 			try {
@@ -251,7 +250,7 @@ public class ServerFrame extends JFrame {
 			User  willResgisterUser=m.getFrom();
 			Boolean result=DataBase.register(willResgisterUser);
 			
-			MessageBox  registerResultMessage=new MessageBox();
+			registerResultMessage=new MessageBox();
 			registerResultMessage.setContent(result.toString());
 			registerResultMessage.setType("registerResult");
 			try {
