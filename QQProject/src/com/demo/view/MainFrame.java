@@ -52,13 +52,13 @@ public class MainFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel(new ImageIcon(user.getImagePath()));
+		JLabel lblNewLabel = new JLabel(new ImageIcon(user.getImagePath()));//获取用户的头像
 		lblNewLabel.setBounds(14, 13, 116, 154);
 		panel.add(lblNewLabel);
 		
 		txtNickname = new JTextField();
 		txtNickname.setBackground(new Color(255, 240, 245));
-		txtNickname.setText(user.getNickname());
+		txtNickname.setText(user.getNickname());//获取登陆界面传入用户的昵称
 		txtNickname.setBounds(139, 13, 279, 30);
 		panel.add(txtNickname);
 		txtNickname.setColumns(10);
@@ -76,7 +76,7 @@ public class MainFrame extends JFrame {
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(0, 0, 274, 79);
-		textArea.setText(user.getSignature());
+		textArea.setText(user.getSignature());//获取登陆界面传入的用户的个性签名
 		signname.add(textArea);
 		
 		JScrollPane scrollPane = new JScrollPane();

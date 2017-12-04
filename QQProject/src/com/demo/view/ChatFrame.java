@@ -38,29 +38,25 @@ public class ChatFrame extends JFrame {
 	private JPanel sendfield;
 	private JTable table_1;
 	private AllActionListener listener;
+	private JLabel label,label2,label3,label4;
+	private User user;
 	
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ChatFrame frame = new ChatFrame();
-					frame.setIconImage(Toolkit.getDefaultToolkit().createImage("sources\\images\\1.jpg"));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
+	 * 
 	 */
-	public ChatFrame() {
+	
+	public ChatFrame(){
+		
+	}
+	
+	public ChatFrame(User user) {
+		this.user=user;
 		setTitle("\u804A\u5929\u754C\u9762");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 758);
@@ -75,23 +71,28 @@ public class ChatFrame extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		Clientnickname = new JTextField();
-		Clientnickname.setText("用户名\r\n");
-		Clientnickname.addActionListener(listener);
-		Clientnickname.setBounds(127, 27, 132, 24);
-		panel.add(Clientnickname);
-		Clientnickname.setColumns(10);
 		
-		JLabel clientInformation = new JLabel();
-		clientInformation.setIcon(new ImageIcon("sources\\images\\clientMessage.PNG"));
-		clientInformation.setBounds(346, 0, 86, 78);
-		panel.add(clientInformation);
+		label=new JLabel();
+		label.setText("消息");
+		label.setBounds(0, 27, 86, 24);
+		panel.add(label);
 		
-		returnMenuFrame = new JTextField();
-		returnMenuFrame.setText("消息");
-		returnMenuFrame.setBounds(0, 27, 86, 24);
-		panel.add(returnMenuFrame);
-		returnMenuFrame.setColumns(10);
+		
+		label2=new JLabel();
+		label2.setText(user.getNickname());
+		label2.setBounds(127, 27, 132, 24);
+		panel.add(label2);
+		
+		 label3 = new JLabel();
+		 label3.setBounds(346, 0, 86, 78);
+		 label3.setText(user.getImagePath());//将本机登陆的客户信息传递到聊天界面
+		 panel.add(label3);
+		
+		label4 = new JLabel();
+		label4.setBounds(127, 30, 132, 10);
+		label4.setText(user.getSignature());//将本机登陆的客户信息传递到聊天界面
+		panel.add(label4);
+		
 		
 		sendfield = new JPanel();
 		sendfield.setBackground(new Color(255, 250, 250));
@@ -110,6 +111,7 @@ public class ChatFrame extends JFrame {
 		JButton close = new JButton("close");
 		close.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		/*	~~~~~~~~~*/
 			}
 		});
 		close.setBounds(282, 669, 113, 27);
